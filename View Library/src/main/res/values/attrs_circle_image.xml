@@ -1,0 +1,13 @@
+<resources>
+    <declare-styleable name="CircleImage">
+        <attr name="drawable" format="color|reference" />
+        <attr name="use" format="enum">
+            <enum name="none" value="0" />
+            <enum name="stroke" value="1" />
+            <enum name="strokePlus" value="2" />
+            <enum name="shadow" value="3" />
+        </attr>
+        <attr name="effectColor" format="color|reference" />
+        <attr name="effectSize" format="dimension|reference" />
+    </declare-styleable>
+</resources>

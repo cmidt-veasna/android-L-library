@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DelightfulButton">
+        <attr name="strokeSize" format="dimension|reference" />
+        <attr name="color" format="color|reference" />
+        <attr name="useStroke" format="boolean|reference" />
+        <attr name="shapeClass" format="string|reference" />
+        <attr name="isCircle" format="boolean|reference" />
+        <attr name="isDepth" format="boolean|reference" />
+        <attr name="depthSize" format="dimension|reference" />
+        <attr name="depthColor" format="color|reference" />
+        <attr name="colorState" format="reference" />
+    </declare-styleable>
+
+</resources>
