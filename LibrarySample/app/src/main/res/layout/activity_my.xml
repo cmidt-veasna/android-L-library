@@ -13,7 +13,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:padding="18dp"
-        app:depthSize="4dp"
+        app:depthSize="3dp"
         app:depthColor="@color/dark_gray"
         app:color="@android:color/white"
         app:strokeSize="2.2dp"
@@ -24,12 +24,31 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:padding="18dp"
-        app:depthSize="4dp"
+        app:depthSize="3dp"
         app:depthColor="@color/dark_gray"
         app:color="@android:color/white"
         app:strokeSize="2.2dp"
         app:isCircle="false"
         app:shapeClass="com.thecamtech.android.library.path.PlusCheckPath"
         app:colorState="@color/float_button_color_state" />
+
+    <com.thecamtech.android.library.view.DelightfulButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:padding="18dp"
+        app:color="@color/blue"
+        app:strokeSize="2.2dp"
+        app:isCircle="false"
+        app:shapeClass="com.thecamtech.android.library.path.PlusCheckPath" />
+
+    <com.thecamtech.android.library.view.DelightfulButton
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:padding="18dp"
+        android:background="@color/dark_gray"
+        app:color="@color/blue"
+        app:strokeSize="2.5dp"
+        app:isCircle="false"
+        app:shapeClass="com.thecamtech.android.library.path.MenuPath" />
 
 </GridLayout>

@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -58,7 +59,7 @@ public class DelightfulButton extends ImageView {
             class_ = a.getString(R.styleable.DelightfulButton_shapeClass);
 
             isCircle = a.getBoolean(R.styleable.DelightfulButton_isCircle, true);
-            isDepth = a.getBoolean(R.styleable.DelightfulButton_isDepth, true);
+            isDepth = a.getBoolean(R.styleable.DelightfulButton_isDepth, true) && !isInEditMode();
             depthColor = a.getColor(R.styleable.DelightfulButton_depthColor, Color.BLACK);
             depthSize = a.getDimension(R.styleable.DelightfulButton_depthSize, depthSize);
 
@@ -71,7 +72,10 @@ public class DelightfulButton extends ImageView {
         if (isDepth) {
             setLayerType(LAYER_TYPE_SOFTWARE, mBackgroundColor.getPaint());
         }
-        setBackground(mBackgroundColor);
+        if (Build.VERSION.SDK_INT >= 16)
+            setBackground(mBackgroundColor);
+        else
+            setBackgroundDrawable(mBackgroundColor);
 
         if (class_ != null) {
             Class outline = Class.forName(class_);
