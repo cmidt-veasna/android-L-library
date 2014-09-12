@@ -1,5 +1,7 @@
 package com.thecamtech.android.library.view;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -9,15 +11,18 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.thecamtech.android.library.R;
 import com.thecamtech.android.library.drawable.ColorAnimateDrawable;
 
+import java.util.Arrays;
+
 /**
  * Created by veasnatemp on 9/9/14.
  */
-public class DelightfulButton extends ImageView {
+public class DelightfulButton extends ImageView implements View.OnClickListener {
 
     private int mColor;
     private float mStrokeSize;
@@ -107,7 +112,7 @@ public class DelightfulButton extends ImageView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        setOnClickListener(mOutline);
+        setOnClickListener(this);
     }
 
     @Override
@@ -132,10 +137,16 @@ public class DelightfulButton extends ImageView {
         }
     }
 
-    public static abstract class Outline extends Drawable implements OnClickListener {
+    @Override
+    public void onClick(View view) {
+        mOutline.internalTrigger();
+    }
+
+    public static abstract class Outline extends Drawable {
 
         protected ValueAnimator mValueAnimator;
         protected DelightfulButton mDelightfulButton;
+        protected boolean mInAnimation;
 
         public void setValueAnimator(ValueAnimator valueAnimator) {
             mValueAnimator = valueAnimator;
@@ -145,13 +156,60 @@ public class DelightfulButton extends ImageView {
             return 300;
         }
 
-        public abstract ValueAnimator getValueAnimator(boolean isReverse);
-
-        public abstract int[] getState();
+        public abstract ValueAnimator getValueAnimator();
 
         public abstract Paint getPaint();
 
-        public abstract void startSwitchAnimation();
+        public abstract int[] getMergeState();
+
+        protected abstract boolean setDrawableState(int[] stateSet);
+
+        @Override
+        public final boolean setState(int[] stateSet) {
+            if (setDrawableState(stateSet)) {
+                super.setState(stateSet);
+                startAnimation();
+                return true;
+            }
+            return false;
+        }
+
+        public abstract void trigger();
+
+        protected boolean containState(int[] source, int[] search) {
+            return Arrays.asList(source).contains(Arrays.asList(search));
+        }
+
+        private void internalTrigger() {
+            trigger();
+            startAnimation();
+        }
+
+        private void startAnimation() {
+            if (mValueAnimator != null) {
+                mValueAnimator.end();
+            }
+
+            mValueAnimator = getValueAnimator();
+            mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                    setValueAnimator(valueAnimator);
+                    invalidateSelf();
+                }
+            });
+            mValueAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mValueAnimator = null;
+                    mInAnimation = false;
+                    invalidateSelf();
+                }
+            });
+            mInAnimation = true;
+            mValueAnimator.start();
+        }
+
     }
 
 }
