@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.thecamtech.librarysample.view.MScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/header_pi"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:text="Personal Information"
+            android:background="@drawable/round_rect" />
+
+        <View
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:background="@drawable/user"
+            android:layout_below="@+id/header_pi" />
+
+        <TextView
+            android:id="@+id/lb_profile_name"
+            style="@style/AppTheme.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header_pi"
+            android:text="Profile name" />
+
+        <com.thecamtech.librarysample.view.MEditText
+            android:id="@+id/profile_name"
+            style="@style/AppTheme.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lb_profile_name"
+            android:singleLine="true"
+            android:hint="eg. Profile name" />
+
+        <TextView
+            android:id="@+id/lb_password"
+            style="@style/AppTheme.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_name"
+            android:text="Password" />
+
+        <com.thecamtech.librarysample.view.MEditText
+            android:id="@+id/password"
+            style="@style/AppTheme.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lb_password"
+            android:singleLine="true"
+            android:inputType="numberPassword"
+            android:hint="eg. 123456" />
+
+        <TextView
+            android:id="@+id/lb_password_confirm"
+            style="@style/AppTheme.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password"
+            android:text="Confirm" />
+
+        <com.thecamtech.librarysample.view.MEditText
+            android:id="@+id/password_confirm"
+            style="@style/AppTheme.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lb_password_confirm"
+            android:singleLine="true"
+            android:inputType="numberPassword"
+            android:hint="eg. 123456" />
+
+        <TextView
+            android:id="@+id/lb_gender"
+            style="@style/AppTheme.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/password_confirm"
+            android:text="Gender" />
+
+        <RadioGroup
+            android:id="@+id/gender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lb_gender"
+            android:layout_marginLeft="@dimen/action_title__abs_left"
+            android:layout_marginBottom="8dp">
+
+            <com.thecamtech.android.library.view.DelightfulRadioButton
+                android:id="@+id/male"
+                style="@style/AppTheme.RadioBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Male" />
+
+            <com.thecamtech.android.library.view.DelightfulRadioButton
+                android:id="@+id/female"
+                style="@style/AppTheme.RadioBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Female" />
+
+        </RadioGroup>
+
+        <View
+            android:layout_width="27dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:background="@drawable/mail"
+            android:layout_below="@+id/gender" />
+
+        <TextView
+            android:id="@+id/lb_email"
+            style="@style/AppTheme.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gender"
+            android:text="Personal" />
+
+        <com.thecamtech.librarysample.view.MEditText
+            android:id="@+id/email"
+            style="@style/AppTheme.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lb_email"
+            android:singleLine="true"
+            android:hint="eg. mymail@example.com" />
+
+        <TextView
+            android:id="@+id/lb_email_work"
+            style="@style/AppTheme.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email"
+            android:text="Work" />
+
+        <com.thecamtech.librarysample.view.MEditText
+            android:id="@+id/email_work"
+            style="@style/AppTheme.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lb_email_work"
+            android:singleLine="true"
+            android:hint="eg. workmail@example.com" />
+
+        <View
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:background="@drawable/phone"
+            android:layout_below="@+id/email_work" />
+
+        <TextView
+            android:id="@+id/lb_phone"
+            style="@style/AppTheme.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/email_work"
+            android:text="Personal" />
+
+        <com.thecamtech.librarysample.view.MEditText
+            android:id="@+id/phone"
+            style="@style/AppTheme.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lb_phone"
+            android:singleLine="true"
+            android:inputType="phone"
+            android:hint="eg. 012 888 620" />
+
+        <TextView
+            android:id="@+id/lb_phone_work"
+            style="@style/AppTheme.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone"
+            android:text="Work" />
+
+        <com.thecamtech.librarysample.view.MEditText
+            android:id="@+id/phone_work"
+            style="@style/AppTheme.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lb_phone_work"
+            android:singleLine="true"
+            android:inputType="phone"
+            android:hint="eg. 012 888 620" />
+
+        <TextView
+            android:id="@+id/header_in"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:layout_below="@+id/phone_work"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:text="Personal Interests"
+            android:background="@drawable/round_rect" />
+
+        <com.thecamtech.android.library.view.DelightfulCheckBox
+            android:id="@+id/research"
+            style="@style/AppTheme.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header_in"
+            android:text="Research" />
+
+        <com.thecamtech.android.library.view.DelightfulCheckBox
+            android:id="@+id/gplus"
+            style="@style/AppTheme.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/research"
+            android:text="Use Google+" />
+
+        <com.thecamtech.android.library.view.DelightfulCheckBox
+            android:id="@+id/facebook"
+            style="@style/AppTheme.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/gplus"
+            android:text="Use Facebook" />
+
+        <com.thecamtech.android.library.view.DelightfulCheckBox
+            android:id="@+id/twitter"
+            style="@style/AppTheme.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/facebook"
+            android:text="Use Twitter" />
+
+        <com.thecamtech.android.library.view.DelightfulCheckBox
+            android:id="@+id/dota2"
+            style="@style/AppTheme.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/twitter"
+            android:text="Play Dota 2" />
+
+    </RelativeLayout>
+
+</com.thecamtech.librarysample.view.MScrollView>

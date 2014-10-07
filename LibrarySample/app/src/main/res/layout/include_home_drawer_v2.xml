@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="match_parent"
+    android:background="@color/drawer_bg"
+    android:layout_gravity="start">
+
+    <com.thecamtech.android.library.view.ParallaxScrollView
+        android:id="@+id/parallax_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:parallaxDirection="toTop"
+        app:parallaxDistance="74dp">
+
+        <com.thecamtech.android.library.view.SelectableLinearLayout
+            android:id="@+id/selectable_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/activity_horizontal_margin"
+            app:startSelectedItem="1"
+            app:minSelectedItem="1"
+            app:drawable="@drawable/menu_selector"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="184dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                style="@style/AppTheme.MenuItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/design"
+                android:text="Design Tips" />
+
+            <TextView
+                style="@style/AppTheme.MenuItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_new"
+                android:text="What's new in Android" />
+
+            <TextView
+                style="@style/AppTheme.MenuItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/book"
+                android:text="Learns More" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/divider" />
+
+            <TextView
+                style="@style/AppTheme.MenuItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_example"
+                android:text="Sample" />
+
+            <TextView
+                style="@style/AppTheme.MenuItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/image"
+                android:text="Gallerys" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/divider" />
+
+            <TextView
+                style="@style/AppTheme.MenuItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/gear"
+                android:text="Settings" />
+
+        </com.thecamtech.android.library.view.SelectableLinearLayout>
+
+    </com.thecamtech.android.library.view.ParallaxScrollView>
+
+    <RelativeLayout
+        android:id="@+id/parallax_container"
+        android:layout_width="match_parent"
+        android:layout_height="191dp">
+
+        <ImageView
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:src="@drawable/flower_banner_v1"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:id="@+id/info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="20dp"
+            android:paddingBottom="8dp"
+            android:orientation="vertical"
+            android:background="@drawable/gradient_drawer_profile">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="85dp"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:text="  Mr. Rumdoul Romchorng Romchek"
+                android:paddingRight="16dp"
+                android:fadingEdge="horizontal"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:cursorVisible="false"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:freezesText="true" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="96dp"
+                android:textSize="16sp"
+                android:textColor="@color/white_transparent"
+                android:text="rumdoul@porsat.prov"
+                android:paddingRight="16dp"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
+
+        </LinearLayout>
+
+        <com.thecamtech.android.library.view.CircleImageView
+            android:id="@+id/circle_image_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="8dp"
+            android:layout_alignParentBottom="true"
+            app:drawable="@drawable/rumdoul_v1"
+            app:use="stroke"
+            app:effectSize="3.5dp"
+            app:effectColor="@color/dark_gray" />
+
+        <View
+            android:id="@+id/line_separate"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dark_gray" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/banner_foreground"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/gradient_top_back_icon" />
+
+</FrameLayout>

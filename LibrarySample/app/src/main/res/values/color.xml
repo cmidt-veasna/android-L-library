@@ -3,4 +3,9 @@
     <color name="blue">#ff0084c0</color>
     <color name="purple">#ffc900a1</color>
     <color name="dark_gray">#ff4a4a49</color>
+    <color name="drawer_bg">#607d8b</color>
+    <color name="dark_transparent">#40000000</color>
+    <color name="darker_transparent">#66000000</color>
+    <color name="white_transparent">#AAFFFFFF</color>
+    <color name="white_full_transparent">#11FFFFFF</color>
 </resources>

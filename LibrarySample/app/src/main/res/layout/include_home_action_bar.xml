@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/actionbar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/action_bar_size"
+    android:orientation="horizontal"
+    android:visibility="invisible" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/action_title__abs_left"
+        android:textColor="@color/purple"
+        android:textSize="20sp"
+        android:text="@string/material_design_sample" />
+
+</FrameLayout>

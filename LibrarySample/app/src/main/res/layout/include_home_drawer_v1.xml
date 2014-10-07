@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="320dp"
+    android:layout_height="match_parent"
+    android:background="@color/drawer_bg"
+    android:layout_gravity="start">
+
+    <com.thecamtech.android.library.view.ParallaxScrollView
+        android:id="@+id/parallax_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:parallaxDirection="toTop"
+        app:parallaxDistance="56dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </com.thecamtech.android.library.view.ParallaxScrollView>
+
+    <RelativeLayout
+        android:id="@+id/parallax_container"
+        android:layout_width="match_parent"
+        android:layout_height="171dp">
+
+        <ImageView
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:src="@drawable/flower_banner_v1"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:id="@+id/info_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="18dp"
+            android:layout_marginLeft="47dp"
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="4dp"
+            android:orientation="vertical"
+            android:background="@drawable/gradient_drawer_profile">
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:text="  Mr. Free Service On Earth"
+                android:paddingRight="16dp"
+                android:fadingEdge="horizontal"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:cursorVisible="false"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:freezesText="true" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:textSize="16sp"
+                android:textColor="@color/white_transparent"
+                android:text="krobyang@darling.com"
+                android:paddingRight="16dp"
+                android:singleLine="true"
+                android:ellipsize="marquee" />
+
+        </LinearLayout>
+
+        <com.thecamtech.android.library.view.CircleImageView
+            android:id="@+id/circle_image_view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="8dp"
+            android:layout_alignParentBottom="true"
+            app:drawable="@drawable/rumdoul_v1"
+            app:use="stroke"
+            app:effectSize="3.5dp"
+            app:effectColor="@color/dark_gray" />
+
+        <View
+            android:id="@+id/line_separate"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dark_gray" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/banner_foreground"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/gradient_drawer_profile" />
+
+</FrameLayout>

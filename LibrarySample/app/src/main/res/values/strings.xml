@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Library Sample</string>
+    <string name="app_name">Sample</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="library">Version 1.0</string>
+    <string name="material_design">Material Design</string>
+    <string name="material_design_sample">Material Design Sample</string>
 
 </resources>

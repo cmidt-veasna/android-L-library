@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ViewStub
+        android:id="@+id/action_bar_viewstub"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/action_bar_size" />
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/action_bar_size">
+
+            <ViewStub
+                android:id="@+id/content_viewstub"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <View
+                android:id="@+id/shadow"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="@drawable/shadow"
+                android:alpha="0.2" />
+
+        </FrameLayout>
+
+        <ViewStub
+            android:id="@+id/menu_viewstub"
+            android:layout_width="320dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+    <ViewStub
+        android:id="@+id/splash_screen_viewstub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.thecamtech.android.library.view.DelightfulButton
+        android:id="@+id/menu_icon"
+        android:layout_width="@dimen/action_bar_size"
+        android:layout_height="@dimen/action_bar_size"
+        android:layout_marginLeft="4dp"
+        android:padding="12dp"
+        app:isDepth="false"
+        app:strokeSize="0.5dp"
+        app:useStroke="true"
+        app:checkToUnchecked="@raw/back_menu"
+        app:uncheckedToCheck="@raw/menu_back"
+        app:colorState="@color/back_menu_icon_state"
+        android:visibility="invisible" />
+
+</FrameLayout>

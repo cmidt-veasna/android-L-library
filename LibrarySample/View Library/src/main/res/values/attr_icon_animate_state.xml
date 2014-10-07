@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <attr name="state_plus" format="boolean" />
-    <attr name="state_done" format="boolean" />
-
-    <attr name="state_menu" format="boolean" />
-    <attr name="state_back" format="boolean" />
-    <attr name="state_close" format="boolean" />
-</resources>

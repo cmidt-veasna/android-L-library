@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--general-->
+    <attr name="rawResource" format="reference" />
+    <attr name="colorState" format="reference" />
+    <attr name="color" format="color|reference" />
+    <attr name="strokeSize" format="dimension|reference" />
+    <attr name="frameNumber" format="integer|reference" />
+    <attr name="isRepeat" format="boolean|reference" />
+    <attr name="duration" format="integer|reference" />
+    <attr name="extraSpace" format="dimension|reference" />
+
+
+    <declare-styleable name="DelightfulCheckBox">
+        <attr name="rawResource" />
+        <attr name="colorState" />
+        <attr name="color" />
+        <attr name="strokeSize" />
+        <attr name="frameNumber" />
+        <attr name="duration" />
+        <attr name="extraSpace" />
+    </declare-styleable>
+
+    <declare-styleable name="DelightfulRadioButton">
+        <attr name="rawResource" />
+        <attr name="colorState" />
+        <attr name="color" />
+        <attr name="strokeSize" />
+        <attr name="frameNumber" />
+        <attr name="duration" />
+        <attr name="extraSpace" />
+    </declare-styleable>
+
+    <declare-styleable name="DelightfulButton">
+        <attr name="strokeSize" />
+        <attr name="color" />
+        <attr name="useStroke" format="boolean|reference" />
+        <attr name="shapeClass" format="string|reference" />
+        <attr name="isCircle" format="boolean|reference" />
+        <attr name="isDepth" format="boolean|reference" />
+        <attr name="depthSize" format="dimension|reference" />
+        <attr name="depthColor" format="color|reference" />
+        <attr name="colorState" />
+        <attr name="frameNumber" />
+        <attr name="isReverse" />
+        <attr name="backgroundColorState" format="reference" />
+        <attr name="checkToUnchecked" format="reference" />
+        <attr name="uncheckedToCheck" format="reference" />
+        <attr name="rawResource" />
+        <attr name="duration" />
+    </declare-styleable>
+
+    <declare-styleable name="PathAnimatorView">
+        <attr name="rawResource" />
+        <attr name="minDuration" format="integer|reference" />
+        <attr name="frameNumber" />
+        <attr name="autoStart" format="boolean|reference" />
+        <attr name="isRepeat" />
+        <attr name="isReverse" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="drawable" format="color|reference" />
+        <attr name="use" format="enum">
+            <enum name="none" value="0" />
+            <enum name="stroke" value="1" />
+            <enum name="strokePlus" value="2" />
+            <enum name="shadow" value="3" />
+        </attr>
+        <attr name="effectColor" format="color|reference" />
+        <attr name="effectSize" format="dimension|reference" />
+    </declare-styleable>
+
+</resources>
