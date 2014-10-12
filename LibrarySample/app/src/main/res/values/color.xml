@@ -8,4 +8,7 @@
     <color name="darker_transparent">#66000000</color>
     <color name="white_transparent">#AAFFFFFF</color>
     <color name="white_full_transparent">#11FFFFFF</color>
+
+    <color name="red">#CC0000</color>
+
 </resources>

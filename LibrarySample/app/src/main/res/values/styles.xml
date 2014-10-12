@@ -6,6 +6,11 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
+    <style name="AppTheme.Tran" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
     <style name="AppTheme.MenuItem" parent="android:Widget.Holo.Light.TextView">
         <item name="android:paddingLeft">8dp</item>
         <item name="android:paddingRight">8dp</item>

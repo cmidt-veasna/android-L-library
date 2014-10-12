@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.thecamtech.android.library.view.DelightfulButton
+        android:id="@+id/first"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:padding="13dp"
+        app:rawResource="@raw/favourite_heart"
+        app:isReverse="true"
+        app:useStroke="true"
+        app:strokeSize="0.3dp"
+        app:colorState="@color/checkbox_white_theme_state" />
+
+    <ImageButton
+        android:id="@+id/second"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:padding="16dp"
+        android:src="@drawable/zoom"
+        android:scaleType="center"
+        android:background="@null" />
+
+</LinearLayout>

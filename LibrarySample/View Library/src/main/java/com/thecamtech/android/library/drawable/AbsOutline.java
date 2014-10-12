@@ -84,10 +84,6 @@ public abstract class AbsOutline extends Drawable {
         });
     }
 
-    protected void setLastIndex(int index) {
-        mLastIndex = index;
-    }
-
     public void startAnimation() {
         toggle();
         internalStartAnimation();
@@ -168,7 +164,6 @@ public abstract class AbsOutline extends Drawable {
         mPathAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                setLastIndex((Integer) mPathAnimator.getAnimatedValue());
                 mPathAnimator = null;
                 invalidateSelf();
                 mInAnimation = false;
@@ -201,24 +196,6 @@ public abstract class AbsOutline extends Drawable {
             }
             return null;
         }
-    }
-
-    protected static boolean containState(int[] source, int[] search) {
-        if (search.length == 0 || source.length == 0) {
-            return false;
-        }
-
-        int count = 0;
-        List<Integer> list = new ArrayList<Integer>();
-        for (int state : search) {
-            list.add(state);
-        }
-        for (int state : source) {
-            if (list.contains(state)) {
-                count++;
-            }
-        }
-        return count == search.length;
     }
 
     protected static void loadResource(Context context, AbsOutline outline, Integer... params) {

@@ -4,11 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ViewStub
-        android:id="@+id/action_bar_viewstub"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/action_bar_size" />
-
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -16,18 +11,23 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/action_bar_size">
+            android:layout_height="match_parent">
 
             <ViewStub
                 android:id="@+id/content_viewstub"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+            <ViewStub
+                android:id="@+id/action_bar_viewstub"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/action_bar_size" />
+
             <View
                 android:id="@+id/shadow"
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
+                android:layout_marginTop="@dimen/action_bar_size"
                 android:background="@drawable/shadow"
                 android:alpha="0.2" />
 

@@ -9,4 +9,9 @@
     <string name="material_design">Material Design</string>
     <string name="material_design_sample">Material Design Sample</string>
 
+    <!-- -->
+    <string name="material_news">"Google has come up with a new interface look, called Material. It's a lot more vibrant that current Android, and it makes much more use of interface layers. This is quite the opposite of recent trends in UI design, which have all been about making interfaces as flat and simple as possible. Material may be simple, but it's not flat."</string>
+    <string name="andriod_battery">"Google has concentrated on improving battery life in Android L with Project Volta. Similar to how Jelly Bean's Project Butter was an effort to make animations feel smoother and more responsive, Project Volta includes a new battery historian to better visualise battery discharge. This will help users work out what a device was doing at any given point in a battery cycle to find out which apps are draining the most power."</string>
+    <string name="runtime_news">"The biggest back-end change is the move from the Dalvik runtime to ART. Part of the operating system at a basic level, the ART runtime supports ARM, x86 and MiPS instructions, and a mix of AOT, JIT and interpreted code. Essentially Android now speaks a lot more languages and will work on more CPUs than its predecessor. This alone could improve performance by as much as twofold over Dalvik, without developers making any code adjustments."</string>
+
 </resources>

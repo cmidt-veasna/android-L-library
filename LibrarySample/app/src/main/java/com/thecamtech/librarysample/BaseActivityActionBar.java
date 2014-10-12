@@ -1,5 +1,8 @@
 package com.thecamtech.librarysample;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +10,7 @@ import android.view.ViewStub;
 import android.widget.AbsListView;
 import android.widget.ScrollView;
 
+import com.thecamtech.android.library.view.DelightfulButton;
 import com.thecamtech.librarysample.view.MScrollView;
 
 /**
@@ -17,8 +21,11 @@ public abstract class BaseActivityActionBar extends Activity {
     private View mActionBar;
     private View mShadow;
     private View mContent;
+    private DelightfulButton mMenu;
     private boolean mIsTransparentShadow;
     private boolean mShadowShowed;
+    private boolean mActionBarShow;
+    private ValueAnimator mValueAnimator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +48,15 @@ public abstract class BaseActivityActionBar extends Activity {
         viewStub.inflate();
 
         mShadow = findViewById(R.id.shadow);
+        mMenu = (DelightfulButton) findViewById(R.id.menu_icon);
 
         onActionBarInflated(mActionBar);
         onContentViewInflated(mContent);
+        mActionBarShow = true;
+    }
+
+    protected DelightfulButton getMenuView() {
+        return mMenu;
     }
 
     protected View getContentView() {
@@ -60,15 +73,58 @@ public abstract class BaseActivityActionBar extends Activity {
     protected void onActionBarInflated(View view) {
     }
 
+    public void showActionBar(boolean bool) {
+        if (bool != mActionBarShow) {
+            if (mValueAnimator != null) {
+                mValueAnimator.cancel();
+            }
+
+            if (bool) {
+
+                mValueAnimator = ValueAnimator.ofInt(-(mActionBar.getHeight() + mShadow.getHeight()), 0);
+
+                mMenu.setVisibility(View.VISIBLE);
+                mActionBar.setVisibility(View.VISIBLE);
+
+            } else {
+                mValueAnimator = ValueAnimator.ofInt(0, -(mActionBar.getHeight() + mShadow.getHeight()));
+            }
+
+            mValueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    final int tranY = (Integer) animation.getAnimatedValue();
+                    mMenu.setTranslationY(tranY);
+                    mActionBar.setTranslationY(tranY);
+                    mShadow.setTranslationY(tranY);
+                }
+            });
+            mValueAnimator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mValueAnimator.removeAllUpdateListeners();
+                    mValueAnimator.removeAllListeners();
+                    mValueAnimator = null;
+                    if (!mActionBarShow) {
+                        mMenu.setVisibility(View.GONE);
+                        mActionBar.setVisibility(View.GONE);
+                    }
+                }
+            });
+            mValueAnimator.start();
+            mActionBarShow = bool;
+        }
+    }
+
     public void enableTransparentShadow(boolean bool) {
         if (mIsTransparentShadow != bool) {
-            if (bool) {
-                mShadow.setAlpha(0);
-            } else {
-                mShadow.setAlpha(0.2f);
-            }
+            mShadow.setAlpha(bool ? 0 : 0.5f);
             mIsTransparentShadow = bool;
         }
+    }
+
+    public void showShadow(boolean bool) {
+        mShadow.setAlpha(bool ? 0.5f : 0);
     }
 
     public void setScrollableView(View view) {
@@ -78,7 +134,7 @@ public abstract class BaseActivityActionBar extends Activity {
                     @Override
                     public void onScrollStateChange(ScrollView scrollView, int status) {
                         if (scrollView.getScrollY() != 0) {
-                            mShadow.animate().alpha(0.6f).setDuration(150);
+                            mShadow.animate().alpha(0.5f).setDuration(150);
                             mActionBar.animate().scaleX(1.02f).scaleY(1.02f).setDuration(150);
                             mShadowShowed = true;
                         } else if (mShadowShowed) {

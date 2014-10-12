@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="MScrollView">
+        <attr name="enableHover" format="boolean|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ImageFrameLayout">
+        <attr name="layout" format="reference" />
+        <attr name="framePadding" format="dimension|reference" />
+        <attr name="android:src" />
+    </declare-styleable>
+
+</resources>

@@ -6,7 +6,11 @@ import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Checkable;
 import android.widget.ImageView;
 
@@ -15,6 +19,7 @@ import com.thecamtech.android.library.drawable.AbsOutline;
 import com.thecamtech.android.library.drawable.ColorAnimatorDrawable;
 import com.thecamtech.android.library.drawable.DoubleStatePath;
 import com.thecamtech.android.library.drawable.ReverseStatePath;
+import com.thecamtech.android.library.util.Utils;
 
 /**
  * Created by veasnatemp on 9/9/14.
@@ -23,6 +28,10 @@ public class DelightfulButton extends ImageView implements Checkable {
 
     public static final int[] CHECKED_STATE_SET = {
             android.R.attr.state_checked
+    };
+
+    public static final int[] PRESSED_STATE_SET = {
+            android.R.attr.state_pressed
     };
 
     private int mColor;
@@ -124,6 +133,18 @@ public class DelightfulButton extends ImageView implements Checkable {
         setClickable(true);
     }
 
+    @Override
+    public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
+        super.onInitializeAccessibilityEvent(event);
+        event.setClassName(DelightfulButton.class.getName());
+    }
+
+    @Override
+    public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
+        super.onInitializeAccessibilityNodeInfo(info);
+        info.setClassName(DelightfulButton.class.getName());
+    }
+
     public void setIconColorStateList(ColorStateList colorStateList) {
         mColorStateList = colorStateList;
         invalidate();
@@ -154,19 +175,22 @@ public class DelightfulButton extends ImageView implements Checkable {
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        if (mBgColorStateList != null && mBackgroundColor != null) {
-            final int color = mBgColorStateList.getColorForState(getDrawableState(), Color.BLACK);
-            mBackgroundColor.switchColor(color, mOutline.getDuration());
-        }
-        if (mColorStateList != null && mOutline != null) {
-            final int color = mColorStateList.getColorForState(getDrawableState(), Color.BLACK);
-            if (mIsClick || mIsManuallyAnimate) {
-                mOutline.setSwitchToColor(color);
-                mOutline.startAnimation();
-                mIsClick = false;
-                mIsManuallyAnimate = false;
-            } else {
-                mOutline.getPaint().setColor(color);
+        // ignore pressed state, leave path as it was.
+        if (!Utils.containState(getDrawableState(), PRESSED_STATE_SET)) {
+            if (mBgColorStateList != null && mBackgroundColor != null) {
+                final int color = mBgColorStateList.getColorForState(getDrawableState(), Color.BLACK);
+                mBackgroundColor.switchColor(color, mOutline.getDuration());
+            }
+            if (mColorStateList != null && mOutline != null) {
+                final int color = mColorStateList.getColorForState(getDrawableState(), Color.BLACK);
+                if (mIsClick || mIsManuallyAnimate) {
+                    mOutline.setSwitchToColor(color);
+                    mOutline.startAnimation();
+                    mIsClick = false;
+                    mIsManuallyAnimate = false;
+                } else {
+                    mOutline.getPaint().setColor(color);
+                }
             }
         }
     }
@@ -260,5 +284,73 @@ public class DelightfulButton extends ImageView implements Checkable {
          * @param isChecked  The new checked state of buttonView.
          */
         void onCheckedChanged(DelightfulButton buttonView, boolean isChecked);
+    }
+
+    static class SavedState extends BaseSavedState {
+        boolean checked;
+
+        /**
+         * Constructor called from {@link com.thecamtech.android.library.view.DelightfulButton#onSaveInstanceState()}
+         */
+        SavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        /**
+         * Constructor called from {@link #CREATOR}
+         */
+        private SavedState(Parcel in) {
+            super(in);
+            checked = (Boolean) in.readValue(null);
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int flags) {
+            super.writeToParcel(out, flags);
+            out.writeValue(checked);
+        }
+
+        @Override
+        public String toString() {
+            return "DelightfulButton.SavedState{"
+                    + Integer.toHexString(System.identityHashCode(this))
+                    + " checked=" + checked + "}";
+        }
+
+        public static final Parcelable.Creator<SavedState> CREATOR
+                = new Parcelable.Creator<SavedState>() {
+            public SavedState createFromParcel(Parcel in) {
+                return new SavedState(in);
+            }
+
+            public SavedState[] newArray(int size) {
+                return new SavedState[size];
+            }
+        };
+    }
+
+    @Override
+    public Parcelable onSaveInstanceState() {
+        // Force our ancestor class to save its state
+        Parcelable superState = super.onSaveInstanceState();
+
+        SavedState ss = new SavedState(superState);
+
+        ss.checked = isChecked();
+        return ss;
+    }
+
+    @Override
+    public void onRestoreInstanceState(Parcelable state) {
+        if (!(state instanceof SavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        SavedState ss = (SavedState) state;
+
+        super.onRestoreInstanceState(ss.getSuperState());
+        setChecked(ss.checked);
+        requestLayout();
     }
 }

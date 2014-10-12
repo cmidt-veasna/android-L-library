@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/action_bar_size"
     android:orientation="horizontal"
-    android:visibility="invisible" >
+    android:visibility="invisible"
+    android:background="@android:color/white">
 
     <TextView
         android:layout_width="wrap_content"

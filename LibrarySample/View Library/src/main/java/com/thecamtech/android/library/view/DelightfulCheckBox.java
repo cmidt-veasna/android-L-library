@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import com.thecamtech.android.library.R;
 import com.thecamtech.android.library.drawable.CheckMarkPath;
 import com.thecamtech.android.library.drawable.ReverseStatePath;
+import com.thecamtech.android.library.util.Utils;
 
 /**
  * Created by veasnasreng on 9/25/14.
@@ -74,6 +75,7 @@ public class DelightfulCheckBox extends CheckBox {
             mDrawable.getPaint().setStyle(Paint.Style.FILL);
         }
         setButtonDrawable(mDrawable);
+        mIsClick = false;
     }
 
     @Override
@@ -91,7 +93,8 @@ public class DelightfulCheckBox extends CheckBox {
     @Override
     protected void drawableStateChanged() {
         super.drawableStateChanged();
-        if (mColorStateList != null && mDrawable != null) {
+        // ignore pressed state, leave path as it was.
+        if (mColorStateList != null && mDrawable != null && !Utils.containState(getDrawableState(), DelightfulButton.PRESSED_STATE_SET)) {
             final int color = mColorStateList.getColorForState(getDrawableState(), Color.BLACK);
             if (mIsClick) {
                 mDrawable.setSwitchToColor(color);

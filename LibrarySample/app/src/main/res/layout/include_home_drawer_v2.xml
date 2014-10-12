@@ -33,13 +33,6 @@
                 style="@style/AppTheme.MenuItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/design"
-                android:text="Design Tips" />
-
-            <TextView
-                style="@style/AppTheme.MenuItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_new"
                 android:text="What's new in Android" />
 

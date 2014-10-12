@@ -1,6 +1,5 @@
 package com.thecamtech.librarysample.fragment;
 
-import android.util.Log;
 import android.widget.ScrollView;
 
 import com.thecamtech.librarysample.BaseActivityActionBar;
@@ -20,5 +19,7 @@ public class SettingFragment extends BaseDrawFragment {
     protected void onActivityAvailable(BaseActivityActionBar baseActivityActionBar) {
         ScrollView scrollView = (ScrollView) getView().findViewById(R.id.scrollview);
         baseActivityActionBar.setScrollableView(scrollView);
+        setScrollableView(scrollView);
     }
+
 }

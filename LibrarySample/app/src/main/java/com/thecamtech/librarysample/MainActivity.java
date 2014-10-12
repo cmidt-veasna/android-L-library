@@ -21,6 +21,7 @@ import com.thecamtech.android.library.view.SelectableLinearLayout;
 import com.thecamtech.librarysample.fragment.BaseDrawFragment;
 import com.thecamtech.librarysample.fragment.ComingSoonFragment;
 import com.thecamtech.librarysample.fragment.SettingFragment;
+import com.thecamtech.librarysample.fragment.WhatsNewInAndroid;
 import com.thecamtech.librarysample.view.util.ActionBarUtil;
 import com.thecamtech.librarysample.view.util.Util;
 
@@ -28,19 +29,17 @@ import java.util.Random;
 
 public class MainActivity extends BaseActivityActionBar {
 
-    private DelightfulButton mMenu;
     private DrawerLayout mDrawerLayout;
     private BaseDrawFragment mCurrentFragment;
 
     @Override
     protected void onContentViewInflated(View view) {
-        mMenu = (DelightfulButton) findViewById(R.id.menu_icon);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mDrawerLayout.setScrimColor(Color.TRANSPARENT);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
 
-        ActionBarUtil.homeAction(mDrawerLayout, getActionBarView(), mMenu, findViewById(R.id.removable), new Runnable() {
+        ActionBarUtil.homeAction(mDrawerLayout, getActionBarView(), getMenuView(), findViewById(R.id.removable), new Runnable() {
             @Override
             public void run() {
                 addFragment(1);
@@ -48,7 +47,7 @@ public class MainActivity extends BaseActivityActionBar {
         });
 
         DrawerListener drawerListener = new DrawerListener();
-        mMenu.setOnCheckedChangeListener(drawerListener);
+        getMenuView().setOnCheckedChangeListener(drawerListener);
         mDrawerLayout.setDrawerListener(drawerListener);
 
         ((TextView) findViewById(R.id.username)).setSelected(true);
@@ -83,20 +82,23 @@ public class MainActivity extends BaseActivityActionBar {
             if (mCurrentFragment == null) {
                 switch (index) {
                     case 1:
+                        mCurrentFragment = new WhatsNewInAndroid();
+                        break;
                     case 2:
-                    case 3:
+                    case 4:
                     case 5:
-                    case 6:
                         mCurrentFragment = new ComingSoonFragment();
                         break;
-                    case 8:
+                    case 7:
                         mCurrentFragment = new SettingFragment();
                 }
                 transaction.setCustomAnimations(R.anim.push_up, R.anim.push_down);
                 transaction.add(R.id.content_fragment, mCurrentFragment, tag);
+                showShadow(false);
             } else {
                 transaction.setCustomAnimations(R.anim.push_up, R.anim.push_down);
                 transaction.attach(mCurrentFragment);
+                mCurrentFragment.onFragmentReAttach();
             }
             transaction.commitAllowingStateLoss();
             fragmentManager.executePendingTransactions();
@@ -164,16 +166,16 @@ public class MainActivity extends BaseActivityActionBar {
         @Override
         public void onDrawerSlide(View view, float v) {
             if (mMinLeftMenu == -1) {
-                mMinLeftMenu = mMenu.getLeft();
-                mMaxLeftMenu = view.getMeasuredWidth() - mMenu.getWidth();
+                mMinLeftMenu = getMenuView().getLeft();
+                mMaxLeftMenu = view.getMeasuredWidth() - getMenuView().getWidth();
             }
-            final int oldLeft = mMenu.getLeft();
-            final int newLeft = (int) (view.getMeasuredWidth() * v) - mMenu.getWidth();
+            final int oldLeft = getMenuView().getLeft();
+            final int newLeft = (int) (view.getMeasuredWidth() * v) - getMenuView().getWidth();
             final int left = Math.max(mMinLeftMenu, Math.min(mMaxLeftMenu, newLeft)) - oldLeft;
 
-            mMenu.offsetLeftAndRight(left);
+            getMenuView().offsetLeftAndRight(left);
             if (mIsDrag || !mIsCheck) {
-                mMenu.setChecked(v > 0.5);
+                getMenuView().setChecked(v > 0.5);
             }
         }
 
@@ -182,9 +184,9 @@ public class MainActivity extends BaseActivityActionBar {
             if (i == DrawerLayout.STATE_DRAGGING) {
                 mIsDrag = true;
             } else if (i == DrawerLayout.STATE_IDLE) {
-                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mMenu.getLayoutParams();
-                params.leftMargin = mMenu.getLeft();
-                mMenu.setLayoutParams(params);
+                FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) getMenuView().getLayoutParams();
+                params.leftMargin = getMenuView().getLeft();
+                getMenuView().setLayoutParams(params);
                 if (mIsDrag || mIsCheck) {
                     mIsDrag = false;
                     mIsCheck = false;

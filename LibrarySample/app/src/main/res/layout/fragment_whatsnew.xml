@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.thecamtech.librarysample.view.MScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:enableHover="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/action_bar_size"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:text="Material Design"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:background="@drawable/round_rect" />
+
+        <com.thecamtech.librarysample.view.ImageFrameLayout
+            android:id="@+id/material_drive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:framePadding="16dp"
+            app:layout="@layout/include_hover_button"
+            android:src="@drawable/material_drive" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:lineSpacingExtra="2.5dp"
+            android:text="@string/material_news"
+            android:textColor="@color/dark_gray"
+            android:textSize="15sp" />
+
+        <com.thecamtech.librarysample.view.ImageFrameLayout
+            android:id="@+id/material_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:framePadding="16dp"
+            app:layout="@layout/include_hover_button"
+            android:src="@drawable/material_mail" />
+
+        <com.thecamtech.librarysample.view.ImageFrameLayout
+            android:id="@+id/material_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:framePadding="16dp"
+            app:layout="@layout/include_hover_button"
+            android:src="@drawable/material_music" />
+
+        <com.thecamtech.librarysample.view.ImageFrameLayout
+            android:id="@+id/material_ui"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:framePadding="16dp"
+            app:layout="@layout/include_hover_button"
+            android:src="@drawable/material_ui" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:text="Battery Life"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:background="@drawable/round_rect" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:lineSpacingExtra="2.5dp"
+            android:text="@string/andriod_battery"
+            android:textColor="@color/dark_gray"
+            android:textSize="15sp" />
+
+        <com.thecamtech.librarysample.view.ImageFrameLayout
+            android:id="@+id/material_battery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:framePadding="16dp"
+            app:layout="@layout/include_hover_button"
+            android:src="@drawable/material_battery" />
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:text="New Runtime"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:background="@drawable/round_rect" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:lineSpacingExtra="2.5dp"
+            android:text="@string/runtime_news"
+            android:textColor="@color/dark_gray"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+</com.thecamtech.librarysample.view.MScrollView>

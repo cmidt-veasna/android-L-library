@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.Rect;
 
 import com.thecamtech.android.library.util.PathHolder;
+import com.thecamtech.android.library.util.Utils;
 import com.thecamtech.android.library.view.DelightfulButton;
 
 /**
@@ -49,9 +50,12 @@ public class ReverseStatePath extends AbsOutline {
 
     @Override
     public boolean setState(int[] stateSet) {
-        mIsChecked = containState(stateSet, DelightfulButton.CHECKED_STATE_SET);
-        if (!mInAnimation) {
-            mLastIndex = mIsChecked ? mFrameNumber - 1 : 0;
+        // ignore pressed state, leave path as it was.
+        if (!Utils.containState(stateSet, DelightfulButton.PRESSED_STATE_SET)) {
+            mIsChecked = Utils.containState(stateSet, DelightfulButton.CHECKED_STATE_SET);
+            if (!mInAnimation) {
+                mLastIndex = mIsChecked ? mFrameNumber - 1 : 0;
+            }
         }
         return super.setState(stateSet);
     }
