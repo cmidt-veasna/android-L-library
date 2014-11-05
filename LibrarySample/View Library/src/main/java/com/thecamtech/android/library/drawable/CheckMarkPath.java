@@ -15,10 +15,10 @@ public class CheckMarkPath extends ReverseStatePath {
     private int mPaddingWithText;
     private int mFrameNumber;
 
-    public CheckMarkPath(Context context, int path, int drawableSize, int padding, int frameNumber, int duration) {
+    public CheckMarkPath(Context context, int path, int drawableSize, int paddingWithText, int frameNumber, int duration) {
         super(context, path, frameNumber, duration);
         mDrawableSize = drawableSize;
-        mPaddingWithText = padding;
+        mPaddingWithText = paddingWithText;
         mFrameNumber = frameNumber;
         mIsChecked = false;
         mLastIndex = mIsChecked ? mFrameNumber - 1 : 0;
@@ -50,8 +50,14 @@ public class CheckMarkPath extends ReverseStatePath {
         PathHolder[] path = getPath();
         if (path != null && path[mLastIndex] != null) {
             Rect rect = getBounds();
+
+            final int width = rect.width();
             rect.right -= mPaddingWithText;
+
+            canvas.save();
+            canvas.translate((width - rect.width()) / 2, 0);
             path[mLastIndex].draw(canvas, mPath, mPaint, null, rect.width(), rect.height());
+            canvas.restore();
         }
     }
 

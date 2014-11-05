@@ -39,9 +39,12 @@
         <attr name="useStroke" format="boolean|reference" />
         <attr name="shapeClass" format="string|reference" />
         <attr name="isCircle" format="boolean|reference" />
+        <attr name="roundedRadius" format="dimension|reference" />
         <attr name="isDepth" format="boolean|reference" />
         <attr name="depthSize" format="dimension|reference" />
         <attr name="depthColor" format="color|reference" />
+        <attr name="rippleColor" format="color|reference" />
+        <attr name="ripple" format="reference" />
         <attr name="colorState" />
         <attr name="frameNumber" />
         <attr name="isReverse" />

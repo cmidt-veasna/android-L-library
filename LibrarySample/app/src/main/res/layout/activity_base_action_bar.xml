@@ -50,7 +50,6 @@
         android:id="@+id/menu_icon"
         android:layout_width="@dimen/action_bar_size"
         android:layout_height="@dimen/action_bar_size"
-        android:layout_marginLeft="4dp"
         android:padding="12dp"
         app:isDepth="false"
         app:strokeSize="0.5dp"

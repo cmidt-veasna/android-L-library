@@ -1,29 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+
+ Need framelayout with transparent background just to fix ripple effect.
+ Ripple effect won't work properly if your viewgroup does not has background,
+ ripple effect will draw its animation behind any view in the a group of view event
+ touched view is display on top of another.
+
+   <FrameLayout id="A">
+        <ImageView id="B" />
+        <ImageButton id="C" />
+   </FrameLayout>
+
+ ImageButton "C" has the ripple effect and ImageView "B" display fit to the parent "A"
+ where ImageButton "C" display on top of ImageView "B".
+
+ if ImageButton "C" has background which is not transparent, the ripple effect will be show
+ on top of ImageView "B" and behind its view ImageButton "C" but if ImageButton "C" does not have
+ background then we won't see ripple effect as it display behind ImageView "B".
+
+ This probably a bug on Lollipop version.
+
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:visibility="gone"
+    android:background="@color/darker_transparent">
 
-    <com.thecamtech.android.library.view.DelightfulButton
-        android:id="@+id/first"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:padding="13dp"
-        app:rawResource="@raw/favourite_heart"
-        app:isReverse="true"
-        app:useStroke="true"
-        app:strokeSize="0.3dp"
-        app:colorState="@color/checkbox_white_theme_state" />
+    <LinearLayout
+        android:id="@+id/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
 
-    <ImageButton
-        android:id="@+id/second"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:padding="16dp"
-        android:src="@drawable/zoom"
-        android:scaleType="center"
-        android:background="@null" />
+        <com.thecamtech.android.library.view.DelightfulButton
+            android:id="@+id/first"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="12dp"
+            app:rawResource="@raw/favourite_heart"
+            app:isDepth="false"
+            app:isReverse="true"
+            app:useStroke="true"
+            app:strokeSize="0.3dp"
+            app:colorState="@color/checkbox_white_theme_state" />
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/second"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:padding="16dp"
+            android:src="@drawable/zoom"
+            android:scaleType="center"
+            android:background="@drawable/ripple_black" />
+
+    </LinearLayout>
+
+</FrameLayout>

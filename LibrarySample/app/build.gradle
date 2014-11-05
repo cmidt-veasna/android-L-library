@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion '19.1.0'
+    compileSdkVersion 21
+    buildToolsVersion '21.0.2'
 
     defaultConfig {
         applicationId "com.the_camtech.librarysample"
         minSdkVersion 14
-        targetSdkVersion 20
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0"
     }
@@ -22,6 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':View Library')
-    compile 'com.android.support:support-v4:20.0.+'
+    compile 'com.android.support:support-v4:21.0.+'
     compile files('libs/android-support-v7-palette.jar')
 }

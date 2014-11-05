@@ -29,6 +29,7 @@ public class ColorAnimatorDrawable extends Drawable {
     private boolean mMutated;
     protected boolean mIsCircle;
     protected float mDepthSize;
+    protected float mRoundedRadius;
     protected int mDepthColor;
     protected boolean mIsDepth;
 
@@ -37,11 +38,12 @@ public class ColorAnimatorDrawable extends Drawable {
     /**
      * Creates a new black ColorDrawable.
      */
-    public ColorAnimatorDrawable(float depthSize, int depthColor, boolean isDepth, boolean isCircle) {
+    public ColorAnimatorDrawable(float depthSize, int depthColor, boolean isDepth, boolean isCircle, float roundedRadius) {
         this(null);
         mDepthColor = depthColor;
         mDepthSize = depthSize;
         mIsCircle = isCircle;
+        mRoundedRadius = roundedRadius;
         mIsDepth = isDepth;
         if (mIsDepth) {
             mPaint.setShadowLayer(mDepthSize, 0, 0, mDepthColor);
@@ -139,11 +141,14 @@ public class ColorAnimatorDrawable extends Drawable {
             } else {
 
                 RectF rectf = new RectF(getBounds());
-                float radius = rectf.height() * 0.10f;
                 rectf.inset(mDepthSize, mDepthSize);
-                canvas.drawRoundRect(rectf, radius, radius, mPaint);
+                canvas.drawRoundRect(rectf, mRoundedRadius, mRoundedRadius, mPaint);
             }
         }
+    }
+
+    public float getRadius() {
+        return getBounds().height() * 0.10f;
     }
 
     /**

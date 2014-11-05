@@ -86,6 +86,7 @@ public class MScrollView extends ScrollView {
                                 mHoverView = (Hoverable) view;
                                 mHover.x = x;
                                 mHover.y = y;
+                                mHover.isCalled = false;
                                 postDelayed(mHover, ViewConfiguration.getTapTimeout());
                                 break;
                             }
@@ -107,8 +108,12 @@ public class MScrollView extends ScrollView {
                     if (!mScrollChangeListener.mDraggingCalled && yDiff > mTouchSlop) {
                         mScrollChangeListener.onScrollStateChange(this, DRAGGING);
                         mScrollChangeListener.mDraggingCalled = true;
-                        if (mHoverEnable) {
-                            removeCallbacks(mHover);
+                        if (mHoverEnable && mHoverView != null) {
+                            if (mHover.isCalled) {
+                                mHoverView.onTouchRelease(ev.getX(), ev.getY());
+                            } else {
+                                removeCallbacks(mHover);
+                            }
                         }
                     }
                     break;
@@ -141,6 +146,10 @@ public class MScrollView extends ScrollView {
                     mScrollChangeListener.onScrollStateChange(this, SETTLE);
                     mScrollChangeListener.mDraggingCalled = false;
                     if (mHoverEnable && mHoverView != null) {
+                        if (!mHover.isCalled) {
+                            removeCallbacks(mHover);
+                            mHover.run();
+                        }
                         mHoverView.onTouchRelease(ev.getX(), ev.getY());
                     }
                     mPointerId = -1;
@@ -174,10 +183,12 @@ public class MScrollView extends ScrollView {
     private class Hover implements Runnable {
         private float x;
         private float y;
+        private boolean isCalled;
 
         @Override
         public void run() {
             mHoverView.onTouchHover(x, y);
+            isCalled = true;
         }
 
     }

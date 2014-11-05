@@ -1,14 +1,24 @@
 package com.thecamtech.android.library.view;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Outline;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RippleDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Checkable;
@@ -42,10 +52,14 @@ public class DelightfulButton extends ImageView implements Checkable {
     private AbsOutline mOutline;
     private boolean mIsReverseMorph;
     private boolean mIsClick;
+    private boolean mIsCircle;
     private boolean mBroadcasting;
     private boolean mIsChecked;
     private boolean mIsManuallyAnimate;
     private OnCheckedChangeListener mOnCheckedChangeListener;
+
+    //
+    private RippleDrawable mRippleDrawable;
 
     public DelightfulButton(Context context) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         super(context);
@@ -62,18 +76,22 @@ public class DelightfulButton extends ImageView implements Checkable {
         init(attrs, defStyleAttr);
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void init(AttributeSet attrs, int defStyleAttr) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         final float density = getResources().getDisplayMetrics().density;
         String class_ = null;
-        boolean isCircle = true;
+        mIsCircle = true;
         boolean isDepth = true;
         int depthColor = Color.BLACK;
+        int rippleColor = Color.BLACK;
         float depthSize = 4 * density;
         int checkToUnchecked = 0, uncheckedToCheck = 0, rawResource = 0;
         float strokeSize = 0;
+        float roundedRadius = 0;
         boolean isUseStroke = false;
         int duration = 300;
         int frameNumber = 21;
+        RippleDrawable ripple = null;
         if (attrs != null) {
 
             TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.DelightfulButton, defStyleAttr, 0);
@@ -83,10 +101,13 @@ public class DelightfulButton extends ImageView implements Checkable {
             isUseStroke = a.getBoolean(R.styleable.DelightfulButton_useStroke, isUseStroke);
             class_ = a.getString(R.styleable.DelightfulButton_shapeClass);
 
-            isCircle = a.getBoolean(R.styleable.DelightfulButton_isCircle, true);
+            mIsCircle = a.getBoolean(R.styleable.DelightfulButton_isCircle, true);
             isDepth = a.getBoolean(R.styleable.DelightfulButton_isDepth, true) && !isInEditMode();
+            roundedRadius = a.getDimension(R.styleable.DelightfulButton_roundedRadius, roundedRadius);
             depthColor = a.getColor(R.styleable.DelightfulButton_depthColor, Color.BLACK);
             depthSize = a.getDimension(R.styleable.DelightfulButton_depthSize, depthSize);
+            rippleColor = a.getColor(R.styleable.DelightfulButton_rippleColor, rippleColor);
+            ripple = (RippleDrawable) a.getDrawable(R.styleable.DelightfulButton_ripple);
 
             mColorStateList = a.getColorStateList(R.styleable.DelightfulButton_colorState);
             mBgColorStateList = a.getColorStateList(R.styleable.DelightfulButton_backgroundColorState);
@@ -101,11 +122,37 @@ public class DelightfulButton extends ImageView implements Checkable {
             a.recycle();
         }
 
-        mBackgroundColor = new ColorAnimatorDrawable(depthSize, depthColor, isDepth, isCircle);
+        mBackgroundColor = new ColorAnimatorDrawable(depthSize, depthColor, isDepth, mIsCircle, roundedRadius);
         if (isDepth) {
             setLayerType(LAYER_TYPE_SOFTWARE, mBackgroundColor.getPaint());
         }
-        if (Build.VERSION.SDK_INT >= 16)
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            if (ripple != null) {
+                mRippleDrawable = ripple;
+            } else {
+                ColorStateList colorStateList = new ColorStateList(new int[][]{new int[0]}, new int[]{rippleColor});
+                mRippleDrawable = new RippleDrawable(colorStateList, mBgColorStateList == null ? null : mBackgroundColor,
+                        new ShapeDrawable(mIsCircle ? new OvalShape() : new RoundRectShape(new float[]{
+                                roundedRadius, roundedRadius, roundedRadius, roundedRadius, roundedRadius, roundedRadius, roundedRadius, roundedRadius
+                        }, null, null)));
+            }
+
+            ViewOutlineProvider provider = new ViewOutlineProvider() {
+                @TargetApi(Build.VERSION_CODES.L)
+                @Override
+                public void getOutline(View view, Outline outline) {
+                    if (mIsCircle) {
+                        outline.setOval(0, 0, view.getWidth(), view.getHeight());
+                    } else {
+                        outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), mBackgroundColor.getRadius());
+                    }
+                }
+            };
+            setOutlineProvider(provider);
+            setBackground(mRippleDrawable);
+
+        } else if (Build.VERSION.SDK_INT >= 16)
             setBackground(mBackgroundColor);
         else
             setBackgroundDrawable(mBackgroundColor);
@@ -133,12 +180,14 @@ public class DelightfulButton extends ImageView implements Checkable {
         setClickable(true);
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public void onInitializeAccessibilityEvent(AccessibilityEvent event) {
         super.onInitializeAccessibilityEvent(event);
         event.setClassName(DelightfulButton.class.getName());
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public void onInitializeAccessibilityNodeInfo(AccessibilityNodeInfo info) {
         super.onInitializeAccessibilityNodeInfo(info);
@@ -155,12 +204,25 @@ public class DelightfulButton extends ImageView implements Checkable {
         invalidate();
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if (getMeasuredHeight() != getMeasuredWidth()) {
             mBackgroundColor.setDrawTypeCircle(false);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mRippleDrawable.setHotspotBounds(0, 0, getWidth(), getHeight());
+            }
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onDraw(Canvas canvas) {
+        final Drawable background = getBackground();
+        background.setBounds(0, 0, getWidth(), getHeight());
+        background.setHotspotBounds(0, 0, getWidth(), getHeight());
+        super.onDraw(canvas);
     }
 
     @Override
@@ -193,6 +255,13 @@ public class DelightfulButton extends ImageView implements Checkable {
                 }
             }
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void drawableHotspotChanged(float x, float y) {
+        super.drawableHotspotChanged(x, y);
+        mRippleDrawable.setHotspot(x, y);
     }
 
     @Override

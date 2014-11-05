@@ -9,8 +9,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +25,18 @@ import com.thecamtech.librarysample.R;
 public class ImageFrameLayout extends FrameLayout implements Hoverable {
 
     private View mContainerHover;
+    private View mFadeBackground;
     private Frame mFrame;
     private float mFramePadding;
     private ImageView mImageView;
     private OnHoverViewClickListener mOnHoverViewClickListener;
+
+    private Runnable mHideHover = new Runnable() {
+        @Override
+        public void run() {
+            dismiss(true, null);
+        }
+    };
 
     public ImageFrameLayout(Context context) {
         super(context);
@@ -64,17 +72,18 @@ public class ImageFrameLayout extends FrameLayout implements Hoverable {
                 addView(mImageView, params);
 
                 if (layout != 0) {
-                    mContainerHover = LayoutInflater.from(getContext()).inflate(layout, this, false);
+                    mFadeBackground = LayoutInflater.from(getContext()).inflate(layout, this, false);
+                    mFadeBackground.setAlpha(0);
+                    mContainerHover = mFadeBackground.findViewById(R.id.tools);
                     mContainerHover.setVisibility(View.GONE);
                     mFrame = new Frame(getContext());
                     mFrame.setAlpha(0);
 
                     params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-                    addView(mFrame, params);
+                    addView(mFadeBackground, params);
 
-                    params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                    params.gravity = Gravity.CENTER;
-                    addView(mContainerHover, params);
+                    params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+                    addView(mFrame, params);
 
                     if (mContainerHover instanceof ViewGroup) {
                         ViewGroup viewGroup = (ViewGroup) mContainerHover;
@@ -104,6 +113,8 @@ public class ImageFrameLayout extends FrameLayout implements Hoverable {
         removeCallbacks(mHideHover);
         if (mContainerHover.getVisibility() == View.GONE) {
             mFrame.startAnimation(true);
+            mFadeBackground.setVisibility(View.VISIBLE);
+            mFadeBackground.animate().alpha(1f);
             mContainerHover.setTranslationY(mContainerHover.getHeight());
             mContainerHover.setAlpha(0f);
             mContainerHover.setVisibility(View.VISIBLE);
@@ -120,34 +131,25 @@ public class ImageFrameLayout extends FrameLayout implements Hoverable {
     public void dismiss(boolean animate, final Runnable endAcRunnable) {
         if (animate) {
             mFrame.startAnimation(false);
-            mContainerHover.animate().alpha(0f).translationY(mContainerHover.getHeight()).withEndAction(new Runnable() {
+            mFadeBackground.animate().alpha(0f);
+            ViewCompat.animate(mContainerHover).alpha(0f).translationY(mContainerHover.getHeight()).withEndAction(new Runnable() {
                 @Override
                 public void run() {
                     if (endAcRunnable != null)
                         endAcRunnable.run();
                     mContainerHover.setVisibility(View.GONE);
+
                 }
             });
         } else {
             mFrame.setAlpha(0f);
+            mFadeBackground.setAlpha(0f);
             if (endAcRunnable != null)
                 endAcRunnable.run();
             mFrame.setVisibility(View.GONE);
+            mFadeBackground.setVisibility(View.GONE);
         }
     }
-
-    private Runnable mHideHover = new Runnable() {
-        @Override
-        public void run() {
-            mFrame.startAnimation(false);
-            mContainerHover.animate().alpha(0f).translationY(mContainerHover.getHeight()).withEndAction(new Runnable() {
-                @Override
-                public void run() {
-                    mContainerHover.setVisibility(View.GONE);
-                }
-            });
-        }
-    };
 
     private class Frame extends View {
 
@@ -162,7 +164,6 @@ public class ImageFrameLayout extends FrameLayout implements Hoverable {
             mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mPaint.setColor(Color.WHITE);
             mPaint.setStrokeWidth(getResources().getDisplayMetrics().density * 1.5f);
-            setBackgroundColor(getResources().getColor(R.color.darker_transparent));
             mCrossPad = (int) (getResources().getDisplayMetrics().density * 15);
             mFactor = 0;
         }
