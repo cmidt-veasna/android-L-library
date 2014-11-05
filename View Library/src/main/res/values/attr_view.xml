@@ -10,6 +10,7 @@
     <attr name="isRepeat" format="boolean|reference" />
     <attr name="duration" format="integer|reference" />
     <attr name="extraSpace" format="dimension|reference" />
+    <attr name="drawable" format="color|reference" />
 
 
     <declare-styleable name="DelightfulCheckBox">
@@ -38,9 +39,12 @@
         <attr name="useStroke" format="boolean|reference" />
         <attr name="shapeClass" format="string|reference" />
         <attr name="isCircle" format="boolean|reference" />
+        <attr name="roundedRadius" format="dimension|reference" />
         <attr name="isDepth" format="boolean|reference" />
         <attr name="depthSize" format="dimension|reference" />
         <attr name="depthColor" format="color|reference" />
+        <attr name="rippleColor" format="color|reference" />
+        <attr name="ripple" format="reference" />
         <attr name="colorState" />
         <attr name="frameNumber" />
         <attr name="isReverse" />
@@ -61,7 +65,7 @@
     </declare-styleable>
 
     <declare-styleable name="CircleImageView">
-        <attr name="drawable" format="color|reference" />
+        <attr name="drawable" />
         <attr name="use" format="enum">
             <enum name="none" value="0" />
             <enum name="stroke" value="1" />
@@ -70,6 +74,21 @@
         </attr>
         <attr name="effectColor" format="color|reference" />
         <attr name="effectSize" format="dimension|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ParallaxScrollView">
+        <attr name="parallaxDistance" format="dimension|reference" />
+        <attr name="parallaxDirection" format="enum">
+            <enum name="toTop" value="1" />
+            <enum name="toBottom" value="2" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SelectableLinearLayout">
+        <attr name="drawable" />
+        <attr name="startSelectedItem" format="integer|reference" />
+        <attr name="minSelectedItem" format="integer|reference" />
+        <attr name="maxSelectedItem" format="integer|reference" />
     </declare-styleable>
 
 </resources>

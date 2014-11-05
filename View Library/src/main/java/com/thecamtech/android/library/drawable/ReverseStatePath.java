@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.Rect;
 
 import com.thecamtech.android.library.util.PathHolder;
+import com.thecamtech.android.library.util.Utils;
 import com.thecamtech.android.library.view.DelightfulButton;
 
 /**
@@ -20,7 +21,7 @@ public class ReverseStatePath extends AbsOutline {
 
     private int mPathSrc;
 
-    protected boolean mIsChecked;
+    public boolean mIsChecked;
     protected Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     protected Path mPath = new Path();
     protected int mFrameNumber;
@@ -39,9 +40,9 @@ public class ReverseStatePath extends AbsOutline {
         if (PATH != null) {
             final int length = PATH.length - 1;
             if (mIsChecked) {
-                return ValueAnimator.ofInt(Math.min(length, mLastIndex), 0).setDuration(getDuration());
+                return ValueAnimator.ofInt((mLastIndex != 0 && mLastIndex != length) ? mLastIndex : 0, length).setDuration(getDuration());
             } else {
-                return ValueAnimator.ofInt(Math.max(0, mLastIndex), length).setDuration(getDuration());
+                return ValueAnimator.ofInt((mLastIndex != 0 && mLastIndex != length) ? mLastIndex : length, 0).setDuration(getDuration());
             }
         }
         return null;
@@ -49,18 +50,19 @@ public class ReverseStatePath extends AbsOutline {
 
     @Override
     public boolean setState(int[] stateSet) {
-        mIsChecked = containState(stateSet, DelightfulButton.CHECKED_STATE_SET);
+        // ignore pressed state, leave path as it was.
+        if (!Utils.containState(stateSet, DelightfulButton.PRESSED_STATE_SET)) {
+            mIsChecked = Utils.containState(stateSet, DelightfulButton.CHECKED_STATE_SET);
+            if (!mInAnimation) {
+                mLastIndex = mIsChecked ? mFrameNumber - 1 : 0;
+            }
+        }
         return super.setState(stateSet);
     }
 
     @Override
     public Paint getPaint() {
         return mPaint;
-    }
-
-    @Override
-    public void toggle() {
-        mIsChecked = !mIsChecked;
     }
 
     /**

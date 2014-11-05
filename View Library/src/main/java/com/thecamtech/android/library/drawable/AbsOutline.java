@@ -30,8 +30,9 @@ public abstract class AbsOutline extends Drawable {
     protected ValueAnimator mPathAnimator;
     protected ValueAnimator mColorSwitchAnimator;
     protected boolean mInAnimation;
+    protected boolean mIsSwitchColor;
     protected int mLastIndex = 0;
-    protected int mSwitchToColor = -1;
+    protected int mSwitchToColor;
     protected Matrix mMatrix = null;
     private Handler mHandler;
     private int mDuration;
@@ -55,7 +56,8 @@ public abstract class AbsOutline extends Drawable {
 
     public abstract Paint getPaint();
 
-    public abstract void toggle();
+    public void toggle() {
+    }
 
     protected ValueAnimator getSwitchColorAnimator() {
         return ValueAnimator.ofObject(new ArgbEvaluator(), getPaint().getColor(), mSwitchToColor).setDuration(getDuration());
@@ -82,10 +84,6 @@ public abstract class AbsOutline extends Drawable {
         });
     }
 
-    protected void setLastIndex(int index) {
-        mLastIndex = index;
-    }
-
     public void startAnimation() {
         toggle();
         internalStartAnimation();
@@ -97,11 +95,12 @@ public abstract class AbsOutline extends Drawable {
      * @param color
      */
     public void setSwitchToColor(int color) {
+        mIsSwitchColor = mSwitchToColor != color;
         mSwitchToColor = color;
     }
 
     private void internalStartAnimation() {
-        if (mSwitchToColor != -1) {
+        if (mIsSwitchColor) {
 
             if (mAnimatorSet != null) {
                 mAnimatorSet.cancel();
@@ -125,6 +124,7 @@ public abstract class AbsOutline extends Drawable {
 
             mAnimatorSet.playTogether(mPathAnimator, mColorSwitchAnimator);
             mAnimatorSet.start();
+            mIsSwitchColor = false;
 
         } else {
             if (mPathAnimator != null) {
@@ -164,7 +164,6 @@ public abstract class AbsOutline extends Drawable {
         mPathAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                setLastIndex((Integer) mPathAnimator.getAnimatedValue());
                 mPathAnimator = null;
                 invalidateSelf();
                 mInAnimation = false;
@@ -197,24 +196,6 @@ public abstract class AbsOutline extends Drawable {
             }
             return null;
         }
-    }
-
-    protected static boolean containState(int[] source, int[] search) {
-        if (search.length == 0 || source.length == 0) {
-            return false;
-        }
-
-        int count = 0;
-        List<Integer> list = new ArrayList<Integer>();
-        for (int state : search) {
-            list.add(state);
-        }
-        for (int state : source) {
-            if (list.contains(state)) {
-                count++;
-            }
-        }
-        return count == search.length;
     }
 
     protected static void loadResource(Context context, AbsOutline outline, Integer... params) {

@@ -141,6 +141,11 @@ public class CircleImageView extends View {
         canvas.drawCircle(center, center, radius, mPaint);
     }
 
+    public void setColorEffect(int colorEffect) {
+        mEffectColor = colorEffect;
+        invalidate();
+    }
+
     public void setBitmap(Bitmap bitmap) {
         setBitmapInternal(bitmap);
         invalidate();
