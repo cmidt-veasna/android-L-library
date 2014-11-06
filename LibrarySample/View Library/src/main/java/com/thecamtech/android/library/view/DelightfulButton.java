@@ -107,7 +107,8 @@ public class DelightfulButton extends ImageView implements Checkable {
             depthColor = a.getColor(R.styleable.DelightfulButton_depthColor, Color.BLACK);
             depthSize = a.getDimension(R.styleable.DelightfulButton_depthSize, depthSize);
             rippleColor = a.getColor(R.styleable.DelightfulButton_rippleColor, rippleColor);
-            ripple = (RippleDrawable) a.getDrawable(R.styleable.DelightfulButton_ripple);
+            if (Build.VERSION.SDK_INT >= 21)
+                ripple = (RippleDrawable) a.getDrawable(R.styleable.DelightfulButton_ripple);
 
             mColorStateList = a.getColorStateList(R.styleable.DelightfulButton_colorState);
             mBgColorStateList = a.getColorStateList(R.styleable.DelightfulButton_backgroundColorState);
@@ -216,14 +217,14 @@ public class DelightfulButton extends ImageView implements Checkable {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    protected void onDraw(Canvas canvas) {
-        final Drawable background = getBackground();
-        background.setBounds(0, 0, getWidth(), getHeight());
-        background.setHotspotBounds(0, 0, getWidth(), getHeight());
-        super.onDraw(canvas);
-    }
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    @Override
+//    protected void onDraw(Canvas canvas) {
+//        final Drawable background = getBackground();
+//        background.setBounds(0, 0, getWidth(), getHeight());
+//        background.setHotspotBounds(0, 0, getWidth(), getHeight());
+//        super.onDraw(canvas);
+//    }
 
     @Override
     public int[] onCreateDrawableState(int extraSpace) {

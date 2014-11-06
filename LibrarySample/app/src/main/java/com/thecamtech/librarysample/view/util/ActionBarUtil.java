@@ -43,9 +43,11 @@ public class ActionBarUtil {
                     ViewCompat.animate(logo).translationY(-logo.getHeight() / 2).withEndAction(new Runnable() {
                         @Override
                         public void run() {
+                            ViewCompat.animate(logo).withEndAction(null);
                             ViewCompat.animate(text).alpha(1f).translationY(text.getHeight()).withEndAction(new Runnable() {
                                 @Override
                                 public void run() {
+                                    ViewCompat.animate(text).withEndAction(null);
                                     removable.postDelayed(new Runnable() {
                                         @Override
                                         public void run() {

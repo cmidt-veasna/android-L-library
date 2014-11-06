@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.graphics.Palette;
 import android.view.Gravity;
@@ -151,6 +152,7 @@ public class MainActivity extends BaseActivityActionBar {
             final int color = palette.getDarkVibrantColor().getRgb();
             final int withAlpha = Util.getArgbFromRgb(180, color);
             ((CircleImageView) findViewById(R.id.circle_image_view)).setColorEffect(color);
+            if (Build.VERSION.SDK_INT >= 16)
             ((GradientDrawable) findViewById(R.id.info_container).getBackground()).setColors(new int[]{withAlpha, Color.TRANSPARENT});
             ((ColorDrawable) findViewById(R.id.line_separate).getBackground()).setColor(color);
         }

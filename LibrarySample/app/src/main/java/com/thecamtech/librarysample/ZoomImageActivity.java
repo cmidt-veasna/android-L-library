@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
@@ -129,7 +130,7 @@ public class ZoomImageActivity extends Activity {
         } else {
             fadeOut = false;
         }
-        mImageView.animate().setDuration(150).
+        ViewCompat.animate(mImageView).setDuration(150).
                 scaleX(mWidthScale).scaleY(mHeightScale).
                 translationX(mLeftDelta).translationY(mTopDelta).
                 withEndAction(new Runnable() {
