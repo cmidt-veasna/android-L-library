@@ -21,6 +21,7 @@ import com.thecamtech.android.library.view.ParallaxScrollView;
 import com.thecamtech.android.library.view.SelectableLinearLayout;
 import com.thecamtech.librarysample.fragment.BaseDrawFragment;
 import com.thecamtech.librarysample.fragment.ComingSoonFragment;
+import com.thecamtech.librarysample.fragment.SampleFragment;
 import com.thecamtech.librarysample.fragment.SettingFragment;
 import com.thecamtech.librarysample.fragment.WhatsNewInAndroid;
 import com.thecamtech.librarysample.view.util.ActionBarUtil;
@@ -86,7 +87,11 @@ public class MainActivity extends BaseActivityActionBar {
                         mCurrentFragment = new WhatsNewInAndroid();
                         break;
                     case 2:
+                        mCurrentFragment = new ComingSoonFragment();
+                        break;
                     case 4:
+                        mCurrentFragment = new SampleFragment();
+                        break;
                     case 5:
                         mCurrentFragment = new ComingSoonFragment();
                         break;
@@ -153,7 +158,7 @@ public class MainActivity extends BaseActivityActionBar {
             final int withAlpha = Util.getArgbFromRgb(180, color);
             ((CircleImageView) findViewById(R.id.circle_image_view)).setColorEffect(color);
             if (Build.VERSION.SDK_INT >= 16)
-            ((GradientDrawable) findViewById(R.id.info_container).getBackground()).setColors(new int[]{withAlpha, Color.TRANSPARENT});
+                ((GradientDrawable) findViewById(R.id.info_container).getBackground()).setColors(new int[]{withAlpha, Color.TRANSPARENT});
             ((ColorDrawable) findViewById(R.id.line_separate).getBackground()).setColor(color);
         }
     }

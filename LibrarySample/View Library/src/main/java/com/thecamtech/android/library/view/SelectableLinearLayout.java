@@ -9,6 +9,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
@@ -39,6 +40,8 @@ public class SelectableLinearLayout extends LinearLayout {
     private float mLastX;
     private float mLastY;
     private Rect mRect;
+
+    private View mSelectedView;
 
     private boolean mInAnimation;
     private AnimatorSet mAnimatorSet;
@@ -99,6 +102,15 @@ public class SelectableLinearLayout extends LinearLayout {
                 mLastX = event.getX();
                 mLastY = event.getY();
                 mPointerId = MotionEventCompat.getPointerId(event, 0);
+
+                final int viewIndex = findViewUnderTouch(event.getX(), event.getY(), this);
+                mSelectedView = getChildAt(viewIndex);
+                if (mSelectedView != null && mSelectedView.getBackground() != null) {
+                    if (Build.VERSION.SDK_INT >= 21)
+                        mSelectedView.getBackground().setHotspot(mLastX - mSelectedView.getLeft(), mLastY - mSelectedView.getTop());
+                    mSelectedView.setPressed(true);
+                }
+
                 break;
 
             case MotionEvent.ACTION_MOVE:
@@ -111,11 +123,12 @@ public class SelectableLinearLayout extends LinearLayout {
                 break;
 
             case MotionEvent.ACTION_CANCEL:
-                claim = true;
-                break;
-
             case MotionEvent.ACTION_UP:
                 claim = true;
+                if (mSelectedView != null && mSelectedView.getBackground() != null) {
+                    mSelectedView.setPressed(false);
+                }
+                mSelectedView = null;
                 final int findIndex = findViewUnderTouch(event.getX(), event.getY(), this);
                 final int newIndex = Math.max(mMinSelectedIndex, Math.min(mMaxSelectedIndex, findIndex));
                 if (findIndex != -1 && mSelectedIndex != newIndex) {

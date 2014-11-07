@@ -54,7 +54,8 @@
             android:layout_height="80dp"
             android:padding="16dp"
             android:src="@drawable/zoom"
-            android:scaleType="center" />
+            android:scaleType="center"
+            android:background="@null" />
 
     </LinearLayout>
 
