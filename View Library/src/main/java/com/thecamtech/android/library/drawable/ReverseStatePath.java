@@ -51,7 +51,7 @@ public class ReverseStatePath extends AbsOutline {
     @Override
     public boolean setState(int[] stateSet) {
         // ignore pressed state, leave path as it was.
-        if (!Utils.containState(stateSet, DelightfulButton.PRESSED_STATE_SET)) {
+        if (stateSet != null && !Utils.containState(stateSet, DelightfulButton.PRESSED_STATE_SET)) {
             mIsChecked = Utils.containState(stateSet, DelightfulButton.CHECKED_STATE_SET);
             if (!mInAnimation) {
                 mLastIndex = mIsChecked ? mFrameNumber - 1 : 0;
