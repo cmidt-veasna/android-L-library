@@ -59,23 +59,23 @@ public class DelightfulButton extends ImageView implements Checkable {
     //
     private RippleDrawable mRippleDrawable;
 
-    public DelightfulButton(Context context) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public DelightfulButton(Context context) {
         super(context);
         init(null, 0);
     }
 
-    public DelightfulButton(Context context, AttributeSet attrs) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public DelightfulButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs, 0);
     }
 
-    public DelightfulButton(Context context, AttributeSet attrs, int defStyleAttr) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
+    public DelightfulButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    public void init(AttributeSet attrs, int defStyleAttr) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public void init(AttributeSet attrs, int defStyleAttr) {
         final float density = getResources().getDisplayMetrics().density;
         String class_ = null;
         mIsCircle = true;
@@ -157,9 +157,17 @@ public class DelightfulButton extends ImageView implements Checkable {
             setBackgroundDrawable(mBackgroundColor);
 
         if (class_ != null) {
-            Class outline = Class.forName(class_);
-            // TODO: make support later
-            mOutline = (AbsOutline) outline.newInstance();
+            Class outline = null;
+            try {
+                outline = Class.forName(class_);
+                // TODO: make support later
+                try {
+                    mOutline = (AbsOutline) outline.newInstance();
+                } catch (InstantiationException e) {
+                } catch (IllegalAccessException e) {
+                }
+            } catch (ClassNotFoundException e) {
+            }
 
         } else if (mIsReverseMorph) {
             mOutline = new ReverseStatePath(getContext(), rawResource, frameNumber, duration);
@@ -215,15 +223,6 @@ public class DelightfulButton extends ImageView implements Checkable {
         }
     }
 
-//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-//    @Override
-//    protected void onDraw(Canvas canvas) {
-//        final Drawable background = getBackground();
-//        background.setBounds(0, 0, getWidth(), getHeight());
-//        background.setHotspotBounds(0, 0, getWidth(), getHeight());
-//        super.onDraw(canvas);
-//    }
-
     @Override
     public int[] onCreateDrawableState(int extraSpace) {
         final int[] drawableState = super.onCreateDrawableState(extraSpace + 1);
@@ -242,15 +241,18 @@ public class DelightfulButton extends ImageView implements Checkable {
                 final int color = mBgColorStateList.getColorForState(getDrawableState(), Color.BLACK);
                 mBackgroundColor.switchColor(color, mOutline.getDuration());
             }
-            if (mColorStateList != null && mOutline != null) {
-                final int color = mColorStateList.getColorForState(getDrawableState(), Color.BLACK);
+            if (mOutline != null) {
                 if (mIsClick || mIsManuallyAnimate) {
-                    mOutline.setSwitchToColor(color);
+                    if (mColorStateList != null) {
+                        mOutline.setSwitchToColor(mColorStateList.getColorForState(getDrawableState(), Color.BLACK));
+                    } else {
+                        mOutline.getPaint().setColor(mColor);
+                    }
                     mOutline.startAnimation();
                     mIsClick = false;
                     mIsManuallyAnimate = false;
                 } else {
-                    mOutline.getPaint().setColor(color);
+                    mOutline.getPaint().setColor(mColorStateList == null ? mColor : mColorStateList.getColorForState(getDrawableState(), Color.BLACK));
                 }
             }
         }

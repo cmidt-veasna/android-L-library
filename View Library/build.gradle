@@ -5,7 +5,6 @@ android {
     buildToolsVersion '21.0.2'
 
     defaultConfig {
-        applicationId "com.thecamtech.android.library"
         minSdkVersion 11
         targetSdkVersion 21
         versionCode 1
@@ -13,7 +12,6 @@ android {
     }
     buildTypes {
         release {
-            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
